@@ -32,7 +32,7 @@ public class ReminderController {
     ReminderLocaleRepository reminderLocaleRepository;
 
     @PostMapping("{id}/reminders")
-    public ResponseEntity<String> saveNewReminder(@PathVariable(name = "id") Integer id, @RequestBody @Valid ReminderLocaleRecordNameDTO reminderLocaleRecordDTO)  {
+    public ResponseEntity<String> saveNewReminder(@PathVariable(name = "id") String id, @RequestBody @Valid ReminderLocaleRecordNameDTO reminderLocaleRecordDTO)  {
         var reminder = reminderRepository.getReminderByName(reminderLocaleRecordDTO.reminder());
         var reminderId = 0;
         var localeId = 0;

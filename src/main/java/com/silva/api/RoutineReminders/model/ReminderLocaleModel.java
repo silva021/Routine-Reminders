@@ -10,7 +10,7 @@ public class ReminderLocaleModel {
     private Integer id;
     private Integer locale_id;
     private Integer reminder_id;
-    private Integer user_id;
+    private String user_id;
 
     public Integer getId() {
         return id;
@@ -36,11 +36,11 @@ public class ReminderLocaleModel {
         this.reminder_id = reminder_id;
     }
 
-    public Integer getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(Integer user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 }
