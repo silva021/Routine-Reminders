@@ -65,13 +65,13 @@ public class ReminderController {
         }
     }
 
-    @GetMapping("{id}/reminders")
-    public ResponseEntity<String> getReminderByLocale(@PathVariable(name = "id") String id, @RequestBody @Valid LocaleRecordDTO localeRecordDTO)  {
-        var locale = localeRepository.getLocaleByName(localeRecordDTO.name().toUpperCase());
+    @GetMapping("{id}/{locale}/reminders")
+    public ResponseEntity<String> getReminderByLocale(@PathVariable(name = "id") String id, @PathVariable(name = "locale") String localePath)  {
+        var locale = localeRepository.getLocaleByName(localePath.toUpperCase());
 
         if (locale == null) {
             var localeModel = new LocaleModel();
-            BeanUtils.copyProperties(localeRecordDTO, localeModel);
+            BeanUtils.copyProperties(new LocaleRecordDTO(localePath), localeModel);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Não sei o que que deu não em, brincadeira sei sim mas tenho que resolver ainda");
         } {
             try {
