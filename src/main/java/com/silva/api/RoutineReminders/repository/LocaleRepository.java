@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LocaleRepository extends JpaRepository<LocaleModel, Integer> {
-    @Query(value = "select * from tb_locale where name = :name", nativeQuery = true)
+    @Query(value = "select * from tb_locale where upper(name) = :name", nativeQuery = true)
     LocaleModel getLocaleByName(@Param(value = "name") String nome);
 }

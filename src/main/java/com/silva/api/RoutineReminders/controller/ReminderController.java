@@ -15,10 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ReminderController {
@@ -65,6 +62,32 @@ public class ReminderController {
             return ResponseEntity.status(HttpStatus.CREATED).body("Foi guardado seu lembrete");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Não foi possível guardar o seu lembrete");
+        }
+    }
+
+    @GetMapping("{id}/reminders")
+    public ResponseEntity<String> getReminderByLocale(@PathVariable(name = "id") String id, @RequestBody @Valid LocaleRecordDTO localeRecordDTO)  {
+        var locale = localeRepository.getLocaleByName(localeRecordDTO.name().toUpperCase());
+
+        if (locale == null) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Não sei o que que deu não em, brincadeira sei sim mas tenho que resolver ainda");
+        } {
+            try {
+                var reminderList = reminderLocaleRepository.getReminderByName(locale.getId(), id);
+
+                if (reminderList.isEmpty()) {
+                    return ResponseEntity.status(HttpStatus.CREATED).body("Você ainda não tem lembretes para " + locale.getName());
+                }
+
+                StringBuilder newText = new StringBuilder();
+                for (String reminder : reminderList) {
+                    newText.append(reminder).append(", ");
+                }
+
+                return ResponseEntity.status(HttpStatus.CREATED).body("Seus lembretes antes de sair para " + locale.getName() + " são " + newText);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Não foi buscar seus lembretes");
+            }
         }
     }
 }
