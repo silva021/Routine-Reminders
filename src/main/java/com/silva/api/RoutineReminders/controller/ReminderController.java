@@ -10,6 +10,7 @@ import com.silva.api.RoutineReminders.model.ReminderModel;
 import com.silva.api.RoutineReminders.repository.LocaleRepository;
 import com.silva.api.RoutineReminders.repository.ReminderLocaleRepository;
 import com.silva.api.RoutineReminders.repository.ReminderRepository;
+import com.silva.api.RoutineReminders.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,12 @@ public class ReminderController {
 
     @Autowired
     LocaleRepository localeRepository;
+
     @Autowired
     ReminderLocaleRepository reminderLocaleRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @PostMapping("{id}/reminders")
     public ResponseEntity<String> saveNewReminder(@PathVariable(name = "id") String id, @RequestBody @Valid ReminderLocaleRecordNameDTO reminderLocaleRecordDTO)  {
