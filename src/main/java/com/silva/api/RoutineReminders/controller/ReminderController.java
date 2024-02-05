@@ -70,6 +70,8 @@ public class ReminderController {
         var locale = localeRepository.getLocaleByName(localeRecordDTO.name().toUpperCase());
 
         if (locale == null) {
+            var localeModel = new LocaleModel();
+            BeanUtils.copyProperties(localeRecordDTO, localeModel);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Não sei o que que deu não em, brincadeira sei sim mas tenho que resolver ainda");
         } {
             try {
