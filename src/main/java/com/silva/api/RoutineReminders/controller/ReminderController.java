@@ -72,6 +72,7 @@ public class ReminderController {
         if (locale == null) {
             var localeModel = new LocaleModel();
             BeanUtils.copyProperties(new LocaleRecordDTO(localePath), localeModel);
+            localeRepository.save(localeModel);
             return ResponseEntity.status(HttpStatus.CREATED).body("Esse local não tinha sido adicionado, acabei de adicionar, pode tentar novamente?");
         } {
             try {
